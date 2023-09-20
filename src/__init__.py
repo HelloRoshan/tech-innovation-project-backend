@@ -26,7 +26,7 @@ def create_app(test_config=None):
     def handle_404(e):
         return jsonify({
             'error': 'API Not found'
-        })
+        }), HTTP_404_NOT_FOUND
     # @app.before_request
     # def before():
         # Things to be done before pre-processing
