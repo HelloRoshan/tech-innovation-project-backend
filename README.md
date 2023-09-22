@@ -24,3 +24,8 @@ source venv/bin/activate
 `
 deactivate
 `
+
+### Update requirements.txt file with latest installed dependencies
+`
+pip3 freeze > requirements.txt
+`
