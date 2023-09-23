@@ -50,15 +50,23 @@ for i in range(len(network_json["links"])):
 graph_stats_json = {
     "total_edges": nx.number_of_edges(G),
     "total_nodes": nx.number_of_nodes(G),
-    "density": nx.density(G)
+    "density": nx.density(G),
+    "average_clustering_coefficient": nx.average_clustering(G),
+    # Only Directed Graphs have strongly connected components
+    "number_of_strongly_connected_components": nx.number_strongly_connected_components(G)
+        if nx.is_directed(G) else 0,
+    "reciprocity": nx.reciprocity(G),
+    # Adjust into proper format since this is converted into a list for JSON return only
+    "adj_matrix": nx.adjacency_matrix(G).todense().tolist()
 }
-nx.draw(G, with_labels=True)
-plt.show()
-# print(graph_stats_json)
+# nx.draw(G, with_labels=True)
+# plt.show()
+print(nx.to_edgelist(G))
 
-# graph_stats_page = Blueprint('graph_stats', __name__)
-# @graph_stats_page.route('/graph-stats')
-# def graph_stats_return():
-#     return jsonify(graph_stats_json), 200
+graph_stats_page = Blueprint('graph_stats', __name__)
+@graph_stats_page.route('/graph-stats')
+def graph_stats_return():
+    return jsonify(graph_stats_json), 200
+    return graph_stats_json
 
-# Take graph as json ani use that to takeout the statisticss
+    # Take graph as json ani use that to takeout the statisticss
