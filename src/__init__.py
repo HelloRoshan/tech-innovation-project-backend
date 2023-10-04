@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, redirect
+from flask_cors import CORS
+
 import os
 from src.constants.http_status_codes import HTTP_404_NOT_FOUND
 
@@ -10,6 +12,7 @@ from src.routes.graph_stats import graph_stats_page
 def create_app(test_config=None):
     app = Flask(__name__,
                 instance_relative_config=True)
+    CORS(app)
     
     
     if test_config is None:
