@@ -4,6 +4,9 @@
 `
 pip install -r requirements.txt
 `
+### Initial setup before running the applicattion for the first time
+
+`xport FLASK_APP=src`
 
 ### Run Server in debug mode with hot reload
 `
