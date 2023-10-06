@@ -1,5 +1,9 @@
 # tech-innovation-project-backend
 
+### Install the Project Locally
+`
+pip install -r requirements.txt
+`
 
 ### Run Server in debug mode with hot reload
 `
