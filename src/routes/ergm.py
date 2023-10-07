@@ -4,6 +4,12 @@ import statsmodels.api as sm
 from flask import Blueprint, jsonify
 from flask_cors import cross_origin
 
+# class ERGM:
+#     def __init__(self):
+#         self.G = ''
+    
+#     def Simulate(self, burn_in, step_size, num_sample):
+
 # Create a sample network using networkx
 G = nx.Graph()
 
