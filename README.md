@@ -41,3 +41,10 @@ deactivate
 `
 pip3 freeze > requirements.txt
 `
+
+### Deploy tot heroku after last commit
+`
+git push heroku main
+`
+Refer
+(Tutorial)[https://devcenter.heroku.com/articles/git#create-a-heroku-remote]
