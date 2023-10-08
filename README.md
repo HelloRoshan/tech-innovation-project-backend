@@ -70,3 +70,8 @@ heroku ps:scale web=1
 `
 heroku open
 `
+
+### Check heroku logs
+`
+heroku logs
+`
