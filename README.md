@@ -51,9 +51,22 @@ deactivate
 pip3 freeze > requirements.txt
 `
 
-### Deploy tot heroku after last commit
+### Deploy to heroku after last commit
 `
 git push heroku main
 `
+
 Refer
-(Tutorial)[https://devcenter.heroku.com/articles/git#create-a-heroku-remote]
+(Tutorial 1)[https://devcenter.heroku.com/articles/git#create-a-heroku-remote]
+(Tutorial 2)[https://devcenter.heroku.com/articles/getting-started-with-python#create-and-deploy-the-app]
+
+
+### Check if one instance of the app is running
+`
+heroku ps:scale web=1
+`
+
+### Visit the app at the URL shown in the deploy output
+`
+heroku open
+`
