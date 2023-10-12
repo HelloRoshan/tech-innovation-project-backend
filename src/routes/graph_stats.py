@@ -58,16 +58,32 @@ class GraphStats:
             self.G.add_edge(source, target)
 
         graph_stats_json = {
-            "total_edges": nx.number_of_edges(self.G),
-            "total_nodes": nx.number_of_nodes(self.G),
-            "density": nx.density(self.G),
-            "average_clustering_coefficient": nx.average_clustering(self.G),
-            # Only Directed Graphs have strongly connected components
-            "number_of_strongly_connected_components": nx.number_strongly_connected_components(self.G)
-                if nx.is_directed(self.G) else 0,
-            "reciprocity": nx.reciprocity(self.G),
+            "graph_summary": {
+                "total_edges": nx.number_of_edges(self.G),
+                "total_nodes": nx.number_of_nodes(self.G),
+                # "max_degree": 0,
+                # "min_degree": 0,
+                # "average_degree": 0,
+                # "median_degree": 0,
+                "reciprocity": nx.reciprocity(self.G) if nx.is_directed else 0,
+            },
+            "graph_connectivity": {
+                "strongly_connected_components": nx.number_strongly_connected_components(self.G)
+                                if nx.is_directed(self.G) else 0,
+                "weakly_connected_components": nx.number_weakly_connected_components(self.G)
+                                if nx.is_directed(self.G) else 0
+            },
+            "graph_distance": {
+                # "average_distance": 0,
+                "diameter": nx.diameter(self.G)
+            },
+            "graph_clustering": {
+                "transitivity": nx.transitivity(self.G),
+                "average_clustering_coefficient": nx.average_clustering(self.G),
+                "density": nx.density(self.G),
+            },
             # Adjust into proper format since this is converted into a list for JSON return only
-            "adj_matrix": nx.adjacency_matrix(self.G).todense().tolist()
+            "graph_adj_matrix": nx.adjacency_matrix(self.G).todense().tolist()
         }
         return graph_stats_json
         
