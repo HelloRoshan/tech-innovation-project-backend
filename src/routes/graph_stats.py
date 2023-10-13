@@ -71,11 +71,8 @@ class GraphStats:
                 "strongly_connected_components": nx.number_strongly_connected_components(self.G)
                                 if nx.is_directed(self.G) else 0,
                 "weakly_connected_components": nx.number_weakly_connected_components(self.G)
-                                if nx.is_directed(self.G) else 0
-            },
-            "graph_distance": {
-                # "average_distance": 0,
-                "diameter": nx.diameter(self.G)
+                                if nx.is_directed(self.G) else 0,
+                "largest_strongly_connected_component_size": len(max(nx.strongly_connected_components(self.G), key=len)) if nx.is_directed(self.G) else 0
             },
             "graph_clustering": {
                 "transitivity": nx.transitivity(self.G),
