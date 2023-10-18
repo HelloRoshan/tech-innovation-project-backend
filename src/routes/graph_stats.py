@@ -65,6 +65,23 @@ class GraphStats:
         for degree in unique_degree_list:
             unique_degree_count.append(degree_sequence.count(degree))
 
+        if (self.directed):
+            # For In Degree Distribution
+            in_degree_sequence = sorted((degree for n, degree in self.G.in_degree()))
+            unique_in_degree_list = list(dict.fromkeys(in_degree_sequence))
+            unique_in_degree_count = []
+
+            for in_degree in unique_in_degree_list:
+                unique_in_degree_count.append(in_degree_sequence.count(in_degree))
+
+            # For Out Degree Distribution
+            out_degree_sequence = sorted((degree for n, degree in self.G.out_degree()))
+            unique_out_degree_list = list(dict.fromkeys(out_degree_sequence))
+            unique_out_degree_count = []
+
+            for out_degree in unique_out_degree_list:
+                unique_out_degree_count.append(out_degree_sequence.count(out_degree))
+
         graph_stats_json = {
             "graph_summary": {
                 "total_edges": nx.number_of_edges(self.G),
@@ -88,15 +105,16 @@ class GraphStats:
                 "density": nx.density(self.G),
             },
             # Adjust into proper format since this is converted into a list for JSON return only
-            "graph_adj_matrix": nx.adjacency_matrix(self.G).todense().tolist(),
             "graph_degree_distribution": {
                 "list_of_unique_degree": unique_degree_list,
-                "count_of_unique_degree": unique_degree_count
+                "count_of_unique_degree": unique_degree_count,
+                "list_of_in_degree": unique_in_degree_list if nx.is_directed(self.G) else [],
+                "count_of_in_degree": unique_in_degree_count if nx.is_directed(self.G) else [],
+                "list_of_out_degree": unique_out_degree_list if nx.is_directed(self.G) else [],
+                "count_of_out_degree": unique_out_degree_count if nx.is_directed(self.G) else []
             }
         }
         return graph_stats_json
-        
-        # print(nx.to_edgelist(G))``
 
 graph_stats_page = Blueprint('graph_stats', __name__)
 @graph_stats_page.route('/graph-stats', methods=['POST'])
