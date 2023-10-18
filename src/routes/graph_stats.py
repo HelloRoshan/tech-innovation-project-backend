@@ -6,6 +6,7 @@
 # - Break into Class and method for efficiency
 
 import networkx as nx
+import statistics
 import json
 import os
 import matplotlib.pyplot as plt
@@ -61,6 +62,8 @@ class GraphStats:
         degree_sequence = sorted((degree for n, degree in self.G.degree()))
         unique_degree_list = list(dict.fromkeys(degree_sequence))
         unique_degree_count = []
+        degree_mean = statistics.mean(degree_sequence)
+        degree_stddev = statistics.stdev(degree_sequence)
 
         for degree in unique_degree_list:
             unique_degree_count.append(degree_sequence.count(degree))
@@ -70,6 +73,8 @@ class GraphStats:
             in_degree_sequence = sorted((degree for n, degree in self.G.in_degree()))
             unique_in_degree_list = list(dict.fromkeys(in_degree_sequence))
             unique_in_degree_count = []
+            in_degree_mean = statistics.mean(in_degree_sequence)
+            in_degree_stddev = statistics.stdev(in_degree_sequence)
 
             for in_degree in unique_in_degree_list:
                 unique_in_degree_count.append(in_degree_sequence.count(in_degree))
@@ -78,6 +83,8 @@ class GraphStats:
             out_degree_sequence = sorted((degree for n, degree in self.G.out_degree()))
             unique_out_degree_list = list(dict.fromkeys(out_degree_sequence))
             unique_out_degree_count = []
+            out_degree_mean = statistics.mean(out_degree_sequence)
+            out_degree_stddev = statistics.stdev(out_degree_sequence)
 
             for out_degree in unique_out_degree_list:
                 unique_out_degree_count.append(out_degree_sequence.count(out_degree))
@@ -86,10 +93,6 @@ class GraphStats:
             "graph_summary": {
                 "total_edges": nx.number_of_edges(self.G),
                 "total_nodes": nx.number_of_nodes(self.G),
-                # "max_degree": 0,
-                # "min_degree": 0,
-                # "average_degree": 0,
-                # "median_degree": 0,
                 "reciprocity": nx.reciprocity(self.G) if nx.is_directed else 0,
             },
             "graph_connectivity": {
@@ -108,10 +111,16 @@ class GraphStats:
             "graph_degree_distribution": {
                 "list_of_unique_degree": unique_degree_list,
                 "count_of_unique_degree": unique_degree_count,
+                "degree_mean": degree_mean,
+                "degree_stddev": degree_stddev,
                 "list_of_in_degree": unique_in_degree_list if nx.is_directed(self.G) else [],
                 "count_of_in_degree": unique_in_degree_count if nx.is_directed(self.G) else [],
+                "in_degree_mean": in_degree_mean if nx.is_directed(self.G) else 0,
+                "in_degree_stddev": in_degree_stddev if nx.is_directed(self.G) else 0,
                 "list_of_out_degree": unique_out_degree_list if nx.is_directed(self.G) else [],
-                "count_of_out_degree": unique_out_degree_count if nx.is_directed(self.G) else []
+                "count_of_out_degree": unique_out_degree_count if nx.is_directed(self.G) else [],
+                "out_degree_mean": out_degree_mean if nx.is_directed(self.G) else 0,
+                "out_degree_stddev": out_degree_stddev if nx.is_directed(self.G) else 0,
             }
         }
         return graph_stats_json
